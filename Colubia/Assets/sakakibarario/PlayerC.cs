@@ -21,9 +21,11 @@ public class PlayerC : MonoBehaviour
         bx = GetComponent<BoxCollider2D>();
     }
 
+
     // Update is called once per frame
     void Update()
     {
+
         //水平方向のチェック
         axisH = Input.GetAxisRaw("Horizontal");
 
