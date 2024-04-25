@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     // 現在のゲーム進行状態
     public GameState currentState = GameState.home;
 
+    public static string GState = "home";//ゲームの状態
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +27,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        if (Input.GetButtonDown("Fire1"))
+            dispatch(GameState.Playing);
     }
 
     // 状態による振り分け処理
@@ -58,18 +61,21 @@ public class GameManager : MonoBehaviour
     // ゲームスタート処理
     void GameStart()
     {
-       
+        GState = "Playing";
+        Debug.Log("playing");
     }
 
     // ゲームクリアー処理
     void GameClear()
     {
-      
+        GState = "GameClear";
+        Debug.Log("GameClear");
     }
 
     // ゲームオーバー処理
     void GameOver()
     {
+        GState = "GameOver";
         Debug.Log("gameover");
     }
 

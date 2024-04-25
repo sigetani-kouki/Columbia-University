@@ -6,10 +6,14 @@ public class Warning_area : MonoBehaviour
 {
     private bool inarea = false;
     public float count_area = 1.5f;
+    //public BoxCollider2D bx1;
+    //public BoxCollider2D bx2;
+
 
     private void Start()
     {
-        
+        //bx1 = GetComponent<BoxCollider2D>();
+        //bx2 = GetComponent<BoxCollider2D>();
     }
     private void Update()
     {
@@ -18,11 +22,12 @@ public class Warning_area : MonoBehaviour
             count_area = 1.5f;//エリアタイムのリセット
             gameObject.GetComponent<SpriteRenderer>().color = new Color32(248, 255, 93, 130);//色のリセット
         }
+        
     }
-
-    private void OnTriggerStay2D(Collider2D collision)
+   
+    private void OnTriggerStay2D(Collider2D other)
     {
-        if (collision.gameObject.tag == "Player")// 主人公
+        if (other.gameObject.tag == "Player")// 主人公
         {
          　  inarea = true;
          　    count_area -= Time.deltaTime;//カウント

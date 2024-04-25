@@ -25,53 +25,57 @@ public class PlayerC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.GState == "Playing")
+        {
+            //水平方向のチェック
+            axisH = Input.GetAxisRaw("Horizontal");
 
-        //水平方向のチェック
-        axisH = Input.GetAxisRaw("Horizontal");
+            //向きの調整
+            if (axisH > 0.0f)
+            {
+                //右移動
+                // Debug.Log("右移動");
+                transform.localScale = new Vector2(1, 1);
 
-        //向きの調整
-        if (axisH > 0.0f)
-        {
-            //右移動
-            // Debug.Log("右移動");
-            transform.localScale = new Vector2(1, 1);
-            
-        }
-        if (axisH < 0.0f)
-        {
-            //左移動
-            //Debug.Log("左移動");
-            transform.localScale = new Vector2(-1, 1);
-           
-        }
-        //キャラクターのジャンプ
-        if (Input.GetButtonDown("Jump"))
-        {
-            Jump();
+            }
+            if (axisH < 0.0f)
+            {
+                //左移動
+                //Debug.Log("左移動");
+                transform.localScale = new Vector2(-1, 1);
+
+            }
+            //キャラクターのジャンプ
+            if (Input.GetButtonDown("Jump"))
+            {
+                Jump();
+            }
         }
     }
 
     private void FixedUpdate()
     {
-
-        //地上判定
-        ongrond = Physics2D.Linecast(transform.position,
+        if (GameManager.GState == "Playing")
+        {
+            //地上判定
+            ongrond = Physics2D.Linecast(transform.position,
                                     transform.position - (transform.up * 0.1f),
                                     GroundLayer);
-        if (ongrond || axisH != 0 )
-        {
-            //地上or速度が０ではないor攻撃中ではない
-            //速度を更新
-            rb.velocity = new Vector2(axisH * speed, rb.velocity.y);
-        }
-        if (ongrond && gojump)
-        {
-            //地上かつジャンプキーが押されたとき
-            //ジャンプする
-            Debug.Log("ジャンプ");
-            Vector2 jumpPw = new Vector2(0, jump);      //ジャンプさせるベクトル
-            rb.AddForce(jumpPw, ForceMode2D.Impulse);   //瞬間的な力を加える
-            gojump = false; //ジャンプフラグをおろす
+            if (ongrond || axisH != 0)
+            {
+                //地上or速度が０ではないor攻撃中ではない
+                //速度を更新
+                rb.velocity = new Vector2(axisH * speed, rb.velocity.y);
+            }
+            if (ongrond && gojump)
+            {
+                //地上かつジャンプキーが押されたとき
+                //ジャンプする
+                Debug.Log("ジャンプ");
+                Vector2 jumpPw = new Vector2(0, jump);      //ジャンプさせるベクトル
+                rb.AddForce(jumpPw, ForceMode2D.Impulse);   //瞬間的な力を加える
+                gojump = false; //ジャンプフラグをおろす
+            }
         }
     }
     //主人公に動き

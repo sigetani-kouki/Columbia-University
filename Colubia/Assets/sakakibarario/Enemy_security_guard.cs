@@ -29,22 +29,25 @@ public class Enemy_security_guard : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (direction)
+        if (GameManager.GState == "Playing")
         {
-            countrightTime -= Time.deltaTime; //カウントアップ
-
-            if (countrightTime < 0)
+            if (direction)
             {
-                StartCoroutine(Moveright());
+                countrightTime -= Time.deltaTime; //カウントアップ
+
+                if (countrightTime < 0)
+                {
+                    StartCoroutine(Moveright());
+                }
             }
-        }
-        else
-        {
-            countleftTime -= Time.deltaTime;  //カウントアップ
-
-            if (countleftTime < 0)
+            else
             {
-                StartCoroutine(Moveleft());
+                countleftTime -= Time.deltaTime;  //カウントアップ
+
+                if (countleftTime < 0)
+                {
+                    StartCoroutine(Moveleft());
+                }
             }
         }
       
