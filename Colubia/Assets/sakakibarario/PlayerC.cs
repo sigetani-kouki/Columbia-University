@@ -51,6 +51,7 @@ public class PlayerC : MonoBehaviour
                 Jump();
             }
         }
+
     }
 
     private void FixedUpdate()
@@ -76,6 +77,10 @@ public class PlayerC : MonoBehaviour
                 rb.AddForce(jumpPw, ForceMode2D.Impulse);   //瞬間的な力を加える
                 gojump = false; //ジャンプフラグをおろす
             }
+        }
+        else
+        {
+            rb.Sleep();//動きを止める
         }
     }
     //主人公に動き
