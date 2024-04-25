@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using UnityEngine;
 
-public class PlayerWork : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rigidbody2D;
 
@@ -49,8 +49,8 @@ public class PlayerWork : MonoBehaviour
             else playerSpeed = 0;
         }
 
-        if (MoveRight) transform.eulerAngles = new Vector3(0, 0,);
-        if (MoveLeft) transform.eulerAngles = new Vector3(0, 180,);
+        if (MoveRight) transform.localScale = new Vector2(-0.4f, 0.4f);
+        if (MoveLeft)  transform.localScale = new Vector2(0.4f, 0.4f);
 
 
         //　Spaceを押したら重力を反転させ、グラフィックの向きを整える
