@@ -7,7 +7,7 @@ public class Enemy_Drone : MonoBehaviour
     Rigidbody2D rb;
 
     //敵の動き
-    public float speed = 6.0f;
+    public float speed = 7.0f;
 
     //カウント用
     private float countleftTime = 3.0f;   //左向き
@@ -34,7 +34,7 @@ public class Enemy_Drone : MonoBehaviour
             if (direction)
             {
                 countrightTime -= Time.deltaTime; //カウントアップ
-
+              
                 if (countrightTime < 0)
                 {
                     StartCoroutine(Moveright());//右向き
@@ -43,7 +43,7 @@ public class Enemy_Drone : MonoBehaviour
             else
             {
                 countleftTime -= Time.deltaTime;  //カウントアップ
-
+                
                 if (countleftTime < 0)
                 {
                     StartCoroutine(Moveleft());//左向き
@@ -58,22 +58,24 @@ public class Enemy_Drone : MonoBehaviour
     }
     IEnumerator Moveleft()
     {
-        Debug.Log("left");
+       
         this.transform.localScale = new Vector2(1, 1);//向きを調整
         rb.velocity = new Vector2(-speed, rb.velocity.y);//動きを決める
-        yield return new WaitForSeconds(2.0f);//待機時間
-        direction = true;
+        yield return new WaitForSeconds(3.0f);//move time
+        rb.velocity = new Vector2(0, rb.velocity.y);//動きを止める
         countleftTime = 3.0f;//リセット
+        direction = true;
         yield break;
     }
     IEnumerator Moveright()
     {
-        Debug.Log("right");
+       
         this.transform.localScale = new Vector2(-1, 1);//向きを調整
         rb.velocity = new Vector2(speed, rb.velocity.y);//動きを決める
-        yield return new WaitForSeconds(2.0f);//待機時間
-        direction = false;
+        yield return new WaitForSeconds(3.0f);//move time
+        rb.velocity = new Vector2(0, rb.velocity.y);//動きを止める
         countrightTime = 3.0f;//リセット
+        direction = false;
         yield break;
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class GameManager : MonoBehaviour
         Over,
         home
     }
+    //フェード用
+    [SerializeField] private string sceneName;
+    [SerializeField] private Color fadeColor;
+    [SerializeField] private float fadeSpeed;
 
     // 現在のゲーム進行状態
     public GameState currentState = GameState.home;
@@ -76,6 +81,7 @@ public class GameManager : MonoBehaviour
     void GameOver()
     {
         GState = "GameOver";
+        Initiate.Fade(sceneName, fadeColor, fadeSpeed);
         Debug.Log("gameover");
     }
 

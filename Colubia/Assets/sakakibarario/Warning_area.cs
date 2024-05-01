@@ -19,27 +19,34 @@ public class Warning_area : MonoBehaviour
     {
         if (!inarea)
         {
-            count_area = 1.5f;//エリアタイムのリセット
+            count_area = 2.0f;//エリアタイムのリセット
             gameObject.GetComponent<SpriteRenderer>().color = new Color32(248, 255, 93, 130);//色のリセット
         }
-        
     }
-   
+
+    private void FixedUpdate()
+    {
+        if(inarea)
+        {
+            inarea = true;
+            count_area -= Time.deltaTime;//カウント
+            if (count_area < 0.5)
+            {
+                gameObject.GetComponent<SpriteRenderer>().color = new Color32(255, 0, 0, 130);//色を変更（赤）
+            }
+            if (count_area < 0)
+            {
+                // ゲームオーバー処理を呼ぶ
+                FindObjectOfType<GameManager>().dispatch(GameManager.GameState.Over);
+            }
+        }
+    }
+
     private void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")// 主人公
         {
-         　  inarea = true;
-         　    count_area -= Time.deltaTime;//カウント
-         　if (count_area < 0.5)
-         　{
-         　     gameObject.GetComponent<SpriteRenderer>().color = new Color32(255, 0, 0, 130);//色を変更（赤）
-         　}
-         　if(count_area <0)
-         　{
-                // ゲームオーバー処理を呼ぶ
-                FindObjectOfType<GameManager>().dispatch(GameManager.GameState.Over);
-            }
+         　inarea = true;
         }
         else
         {
