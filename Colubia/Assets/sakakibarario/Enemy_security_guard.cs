@@ -7,7 +7,7 @@ public class Enemy_security_guard : MonoBehaviour
     Rigidbody2D rb;
 
     //敵の動き
-    public float speed = 2.0f;
+    public float speed = 2.5f;
 
     //カウント用
     private float countleftTime  = 3.0f;   //左向き
@@ -50,12 +50,16 @@ public class Enemy_security_guard : MonoBehaviour
                 }
             }
         }
-      
+        else
+        {
+            rb.Sleep();//動きを止める
+        }
+
     }
     IEnumerator Moveleft()
     {
-        this.transform.localScale = new Vector2(1, 1);
-        rb.velocity = new Vector2(-speed, rb.velocity.y);
+        this.transform.localScale = new Vector2(1, 1);//左向き
+        rb.velocity = new Vector2(-speed, rb.velocity.y);//動きを決める
         yield return new WaitForSeconds(2.0f);
         direction = true;
         countleftTime = 3.0f;
@@ -63,8 +67,8 @@ public class Enemy_security_guard : MonoBehaviour
     }
     IEnumerator Moveright()
     {
-        this.transform.localScale = new Vector2(-1, 1);
-        rb.velocity = new Vector2(speed, rb.velocity.y);
+        this.transform.localScale = new Vector2(-1, 1);//右向き
+        rb.velocity = new Vector2(speed, rb.velocity.y);//動きを決める
         yield return new WaitForSeconds(2.0f);
         direction = false;
         countrightTime = 3.0f;
