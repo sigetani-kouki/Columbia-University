@@ -20,7 +20,6 @@ public class Warning_area : MonoBehaviour
     {
         if(inarea)
         {
-            inarea = true;
             count_area -= Time.deltaTime;//カウント
             if (count_area < 0.5)
             {
@@ -43,9 +42,14 @@ public class Warning_area : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")// 主人公
         {
+
          　inarea = true;
-        }
-        else
+        }  
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Player")// 主人公
         {
             inarea = false;
         }

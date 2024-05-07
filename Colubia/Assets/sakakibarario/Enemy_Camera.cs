@@ -10,8 +10,6 @@ public class Enemy_Camera : MonoBehaviour
     //敵の動き
     private float PRota_speed = 1.0f;
     private float MRota_speed = -1.0f;
-    private float i = 0;
-    private float j = 1.0f;
     //カウント用
     private float countleftTime = 3.0f;   //左向き
     private float countrightTime = 3.0f;   //右向き
@@ -49,7 +47,7 @@ public class Enemy_Camera : MonoBehaviour
         }
         else
         {
-            rb.Sleep();//動きを止める
+           
         }
 
     }
