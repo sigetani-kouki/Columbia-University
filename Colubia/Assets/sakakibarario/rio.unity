@@ -174,7 +174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &298630988
 Transform:
   m_ObjectHideFlags: 0
@@ -273,7 +273,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &388481058
 Transform:
   m_ObjectHideFlags: 0
@@ -635,7 +635,6 @@ GameObject:
   - component: {fileID: 583261793}
   - component: {fileID: 583261795}
   - component: {fileID: 583261796}
-  - component: {fileID: 583261797}
   - component: {fileID: 583261798}
   m_Layer: 0
   m_Name: Triangle
@@ -724,32 +723,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   count_area: 1.5
---- !u!61 &583261797
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 583261792}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.02091159, y: 0.14108622}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.28866667}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.0014622, y: 0.9242823}
-  m_EdgeRadius: 0
 --- !u!61 &583261798
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -763,7 +736,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.045475304, y: 0.40695354}
+  m_Offset: {x: -0.045475304, y: 0.1920154}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.28866667}
@@ -774,7 +747,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1570958, y: 0.6087596}
+  m_Size: {x: 1.1570958, y: 1.038636}
   m_EdgeRadius: 0
 --- !u!1 &904289671
 GameObject:
@@ -795,7 +768,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &904289672
 Transform:
   m_ObjectHideFlags: 0
@@ -1236,7 +1209,6 @@ GameObject:
   - component: {fileID: 1765033940}
   - component: {fileID: 1765033944}
   - component: {fileID: 1765033943}
-  - component: {fileID: 1765033942}
   - component: {fileID: 1765033941}
   m_Layer: 0
   m_Name: Triangle
@@ -1273,7 +1245,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.045475304, y: 0.40695354}
+  m_Offset: {x: -0.045475304, y: 0.18817718}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.28866667}
@@ -1284,33 +1256,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1570958, y: 0.6087596}
-  m_EdgeRadius: 0
---- !u!61 &1765033942
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1765033939}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.031438857, y: 0.13689208}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.28866667}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.148844, y: 0.93267083}
+  m_Size: {x: 1.1570958, y: 1.0463123}
   m_EdgeRadius: 0
 --- !u!114 &1765033943
 MonoBehaviour:

@@ -19,8 +19,8 @@ public class Warning_area : MonoBehaviour
     {
         if (!inarea)
         {
-            count_area = 2.0f;//エリアタイムのリセット
-            gameObject.GetComponent<SpriteRenderer>().color = new Color32(248, 255, 93, 130);//色のリセット
+            //count_area = 1.5f;//エリアタイムのリセット
+            //gameObject.GetComponent<SpriteRenderer>().color = new Color32(248, 255, 93, 130);//色のリセット
         }
     }
 
@@ -39,6 +39,11 @@ public class Warning_area : MonoBehaviour
                 // ゲームオーバー処理を呼ぶ
                 FindObjectOfType<GameManager>().dispatch(GameManager.GameState.Over);
             }
+        }
+        else
+        {
+            count_area = 1.5f;//エリアタイムのリセット
+            gameObject.GetComponent<SpriteRenderer>().color = new Color32(248, 255, 93, 130);//色のリセット
         }
     }
 
