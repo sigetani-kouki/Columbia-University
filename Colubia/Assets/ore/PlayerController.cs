@@ -7,9 +7,11 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rigidbody2D;
 
+    LockerController lockerController;
+
     //　プレイヤー移動管理
     public float speed = 3.0f;
-    private float playerSpeed;
+    private float playerX;
     private bool Onmove = true;
     private bool MoveLeft = false;
     private bool MoveRight = false;
@@ -26,6 +28,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        lockerController = GameObject.FindWithTag("Locker").GetComponent<LockerController>();
     }
 
     // Update is called once per frame
@@ -37,18 +40,19 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.A)) 
             { 
                 MoveLeft = true;    MoveRight = false;
-                playerSpeed = -speed;    
+                playerX = -speed;    
             }
 
             //　Bを押したら左に進む
             else if (Input.GetKey(KeyCode.D))
             {
                 MoveRight = true; MoveLeft = false;
-                playerSpeed = speed;
+                playerX = speed;
             }
-            else playerSpeed = 0;
+            else playerX = 0;
         }
 
+        //  キャラクターが進行方向に進むようにする
         if (MoveRight) transform.localScale = new Vector2(-0.4f, 0.4f);
         if (MoveLeft)  transform.localScale = new Vector2(0.4f, 0.4f);
 
@@ -59,14 +63,35 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.Space))
                 GravityChange();
         }
+
+        //  ロッカーのボタンガイドがアクティブなら
+        if (lockerController.childObj.activeSelf) 
+        {
+            if (Input.GetKey(KeyCode.F))
+            {
+                Debug.Log("F");
+
+                Onmove = false;
+
+                    if (transform.position.x >= lockerController.transform.position.x)
+                    {
+                        
+                    }
+                    else
+                        transform.position += transform.right;
+                
+               
+            }
+        }
+        
             
 
-        rigidbody2D.velocity = new Vector2(playerSpeed, rigidbody2D.velocity.y);
+        rigidbody2D.velocity = new Vector2(playerX, rigidbody2D.velocity.y);
     }
 
     void GravityChange()
     {
-        playerSpeed = 0;//  移動中に反転できないようにできる
+        playerX = 0;//  移動中に反転できないようにできる
         SwitchGravity = false;
         Onmove = false;
 
