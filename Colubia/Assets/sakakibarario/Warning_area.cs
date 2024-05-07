@@ -15,15 +15,7 @@ public class Warning_area : MonoBehaviour
         //bx1 = GetComponent<BoxCollider2D>();
         //bx2 = GetComponent<BoxCollider2D>();
     }
-    private void Update()
-    {
-        if (!inarea)
-        {
-            //count_area = 1.5f;//エリアタイムのリセット
-            //gameObject.GetComponent<SpriteRenderer>().color = new Color32(248, 255, 93, 130);//色のリセット
-        }
-    }
-
+  
     private void FixedUpdate()
     {
         if(inarea)
