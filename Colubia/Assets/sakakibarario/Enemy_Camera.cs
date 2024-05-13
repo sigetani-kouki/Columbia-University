@@ -32,7 +32,7 @@ public class Enemy_Camera : MonoBehaviour
 
                 if (countrightTime < 0)
                 {
-                    StartCoroutine(Moveright());
+                    StartCoroutine(Moveleft());
                 }
             }
             else
@@ -41,7 +41,7 @@ public class Enemy_Camera : MonoBehaviour
 
                 if (countleftTime < 0)
                 {
-                    StartCoroutine(Moveleft());
+                    StartCoroutine(Moveright());
                 }
             }
         }
@@ -57,7 +57,7 @@ public class Enemy_Camera : MonoBehaviour
             
             yield return new WaitForSeconds(3.2f);
         
-        direction = true;
+        direction = false;
         Debug.Log("aaa");
         countleftTime = 3.0f;
         yield break;
@@ -69,7 +69,7 @@ public class Enemy_Camera : MonoBehaviour
            
             yield return new WaitForSeconds(3.2f);
         
-        direction = false;
+        direction = true;
         Debug.Log("bbb");
         countrightTime = 3.0f;
         yield break;
