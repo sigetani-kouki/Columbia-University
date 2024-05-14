@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    Rigidbody2D rigidbody2D;
+    Rigidbody2D rb2D;
+    Vector2 position;
+    public GameObject LockerVision;
 
     LockerController lockerController;
 
@@ -13,8 +15,10 @@ public class PlayerController : MonoBehaviour
     public float speed = 3.0f;
     private float playerX;
     private bool Onmove = true;
-    private bool MoveLeft = false;
-    private bool MoveRight = false;
+    private bool isMoveLeft = false;
+    private bool isMoveRight = false;
+    public bool isInteract = true;
+    public bool inLocker = false;
 
 
     //  重力管理
@@ -27,34 +31,36 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        rb2D = GetComponent<Rigidbody2D>();
         lockerController = GameObject.FindWithTag("Locker").GetComponent<LockerController>();
+
+        position = transform.position;
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         if (Onmove)
         {
             //　Aを押したら左に進む
             if (Input.GetKey(KeyCode.A)) 
             { 
-                MoveLeft = true;    MoveRight = false;
+                isMoveLeft = true;    isMoveRight = false;
                 playerX = -speed;    
             }
 
             //　Bを押したら左に進む
             else if (Input.GetKey(KeyCode.D))
             {
-                MoveRight = true; MoveLeft = false;
+                isMoveRight = true; isMoveLeft = false;
                 playerX = speed;
             }
             else playerX = 0;
         }
 
         //  キャラクターが進行方向に進むようにする
-        if (MoveRight) transform.localScale = new Vector2(-0.4f, 0.4f);
-        if (MoveLeft)  transform.localScale = new Vector2(0.4f, 0.4f);
+        if (isMoveRight) transform.localScale = new Vector2(-0.4f, 0.4f);
+        if (isMoveLeft)  transform.localScale = new Vector2(0.4f, 0.4f);
 
 
         //　Spaceを押したら重力を反転させ、グラフィックの向きを整える
@@ -67,26 +73,26 @@ public class PlayerController : MonoBehaviour
         //  ロッカーのボタンガイドがアクティブなら
         if (lockerController.childObj.activeSelf) 
         {
-            if (Input.GetKey(KeyCode.F))
+            if (Input.GetKey(KeyCode.F) && isInteract == true) 
             {
-                Debug.Log("F");
+                isInteract = false;
+                StartCoroutine(Interactive());
 
-                Onmove = false;
-
-                    if (transform.position.x >= lockerController.transform.position.x)
-                    {
-                        
-                    }
-                    else
-                        transform.position += transform.right;
-                
-               
+                if(inLocker == false)
+                {
+                    inLocker = true;
+                    Onmove = false;
+                    LockerVision.SetActive(true);
+}
+                else
+                {
+                    inLocker = false;
+                    Onmove = true; 
+                    LockerVision.SetActive(false);
+                }
             }
         }
-        
-            
-
-        rigidbody2D.velocity = new Vector2(playerX, rigidbody2D.velocity.y);
+        rb2D.velocity = new Vector2(playerX, rb2D.velocity.y);
     }
 
     void GravityChange()
@@ -94,9 +100,10 @@ public class PlayerController : MonoBehaviour
         playerX = 0;//  移動中に反転できないようにできる
         SwitchGravity = false;
         Onmove = false;
+        isInteract = false;
 
         //　重力を反転させる
-        rigidbody2D.gravityScale *= -1;
+        rb2D.gravityScale *= -1;
 
         StartCoroutine(PlayerRotate());
     }
@@ -132,6 +139,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
         SwitchGravity = true;
         Onmove = true; //着地後に移動できるようにする
+        isInteract = true;
     }
 
     void FlipX()
@@ -141,5 +149,16 @@ public class PlayerController : MonoBehaviour
         else
             this.GetComponent<SpriteRenderer>().flipX = false;
 
+    }
+
+    IEnumerator Interactive()
+    {
+        Debug.Log("F");
+
+        position.x = lockerController.transform.position.x;
+        transform.position = position;
+
+        yield return new WaitForSeconds(4f);
+        isInteract = true;
     }
 }
