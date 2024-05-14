@@ -37,6 +37,10 @@ public class Enemy_Strength_Security_Guard : MonoBehaviour
     {
         //Player　のゲームオブジェクトを得る
          player = GameObject.FindGameObjectWithTag("Player");
+        if(GameManager.GState == "Pose")
+        {
+            Moved_Enemy = true;//初期位置に戻す
+        }
     }
     private void FixedUpdate()
     {
@@ -65,7 +69,6 @@ public class Enemy_Strength_Security_Guard : MonoBehaviour
                 }
                 if(MyEnemy.x == transform.position.x)
                 {
-                    Debug.Log(MyEnemy);
                     direction = false;
                     Moved_Enemy = false;
                    
