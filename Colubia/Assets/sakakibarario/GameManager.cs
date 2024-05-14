@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
         Playing,
         Clear,
         Over,
-        home
+        Home,
+        Pose
     }
     //フェード用
     [SerializeField] private string sceneName;
@@ -19,7 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float fadeSpeed;
 
     // 現在のゲーム進行状態
-    public GameState currentState = GameState.home;
+    public GameState currentState = GameState.Home;
 
     public static string GState = "home";//ゲームの状態
 
@@ -51,8 +52,11 @@ public class GameManager : MonoBehaviour
             case GameState.Over:
                 GameOver();
                 break;
-            case GameState.home:
+            case GameState.Home:
 
+                break;
+            case GameState.Pose:
+                GamePose();
                 break;
         }
 
@@ -61,6 +65,12 @@ public class GameManager : MonoBehaviour
     void GameOpening()
     {
 
+    }
+
+    //ポーズ処理
+    void GamePose()
+    {
+        GState = "Pose";
     }
 
     // ゲームスタート処理

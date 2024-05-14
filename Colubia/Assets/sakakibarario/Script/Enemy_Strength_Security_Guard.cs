@@ -61,7 +61,7 @@ public class Enemy_Strength_Security_Guard : MonoBehaviour
                     {
                         this.transform.localScale = new Vector2(1, 1);//ç∂å¸Ç´
                     }
-                    transform.position = Vector3.MoveTowards(transform.position, MyEnemy, speed * Time.deltaTime);
+                    transform.position = Vector3.MoveTowards(transform.position, MyEnemy, speed_P * Time.deltaTime);
                 }
                 if(MyEnemy.x == transform.position.x)
                 {
