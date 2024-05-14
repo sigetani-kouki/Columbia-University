@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -11,12 +12,18 @@ public class PlayerController : MonoBehaviour
 
     LockerController lockerController;
 
-    //　プレイヤー移動管理
+    SpriteRenderer sp;
+    Color spriteColor;
+
+    //　プレイヤー管理
+    public float hideduration = 0.005f;
     public float speed = 3.0f;
     private float playerX;
     private bool Onmove = true;
     private bool isMoveLeft = false;
     private bool isMoveRight = false;
+
+    //　ロッカー系
     public bool isInteract = true;
     public bool inLocker = false;
 
@@ -33,6 +40,8 @@ public class PlayerController : MonoBehaviour
     {
         rb2D = GetComponent<Rigidbody2D>();
         lockerController = GameObject.FindWithTag("Locker").GetComponent<LockerController>();
+        sp = GetComponent<SpriteRenderer>();
+        spriteColor = sp.color;
 
         position = transform.position;
     }
@@ -40,6 +49,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
         if (Onmove)
         {
             //　Aを押したら左に進む
@@ -76,19 +86,23 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.F) && isInteract == true) 
             {
                 isInteract = false;
-                StartCoroutine(Interactive());
+                StartCoroutine(Interactive("Locker"));
 
+                //  隠れる
                 if(inLocker == false)
                 {
                     inLocker = true;
-                    Onmove = false;
-                    LockerVision.SetActive(true);
-}
+                    Onmove = false;      //　主人公を止める
+                    StartCoroutine(hideCTRL(0));    //　主人公を非表示にする
+                    StartCoroutine(LockerActivate(true));
+                }
+                //　表に出る
                 else
                 {
                     inLocker = false;
-                    Onmove = true; 
-                    LockerVision.SetActive(false);
+                    Onmove = true;      //　主人公を動けるようにする
+                    StartCoroutine(hideCTRL(1));    //　主人公を表示する
+                    StartCoroutine(LockerActivate(false)); 
                 }
             }
         }
@@ -151,14 +165,42 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    IEnumerator Interactive()
+    IEnumerator Interactive(string anyOBJ)
     {
         Debug.Log("F");
 
-        position.x = lockerController.transform.position.x;
-        transform.position = position;
+        if (anyOBJ == "Locker")
+        {
+            //　ロッカーのX座標を「主人公とは無関係」のベクター型変数に保存
+            position.x = lockerController.transform.position.x;
+            //　保存してた座標をプレイヤーに入れる
+            transform.position = position;
 
-        yield return new WaitForSeconds(4f);
-        isInteract = true;
+            yield return new WaitForSeconds(4f);
+            isInteract = true;
+        } 
     }
+
+    IEnumerator hideCTRL(float targetAlpha)
+    {
+        Debug.Log("aaa");
+        while (!Mathf.Approximately(spriteColor.a, targetAlpha))
+        {
+            float changePerFrame = Time.deltaTime / hideduration;
+            spriteColor.a = Mathf.MoveTowards(spriteColor.a, targetAlpha, changePerFrame);
+            sp.color = spriteColor;
+            yield return null;
+        }
+    }
+
+    IEnumerator LockerActivate(bool activate)
+    {
+        yield return new WaitForSeconds(0.25f);
+
+        if (activate) 
+            LockerVision.SetActive(true);
+        else
+            LockerVision.SetActive(false);
+    }
+
 }

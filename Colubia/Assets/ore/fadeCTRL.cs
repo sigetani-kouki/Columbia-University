@@ -6,7 +6,7 @@ public class fadeCTRL : MonoBehaviour
 {
     SpriteRenderer sp;
     Color spriteColor;
-    float duration = 1f;
+    float duration = 0.5f;
     // Start is called before the first frame update
     void Start()
     {

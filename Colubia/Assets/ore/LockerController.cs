@@ -8,6 +8,7 @@ public class LockerController : MonoBehaviour
 {
     //  子オブジェクト取得用
     public GameObject childObj;
+    private bool isStay = false;
 
     PlayerController PlayerCTRL;
     // Start is called before the first frame update
@@ -19,17 +20,25 @@ public class LockerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (PlayerCTRL.isInteract == true && isStay)
+        {
+            childObj.SetActive(true);
+        }
+        else
+        {
+            childObj.SetActive(false);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(PlayerCTRL.LockerVision==true)
-            childObj.SetActive(true);// 取得したobjを表示させる
+        isStay = true;
+        childObj.SetActive(true);// 取得したobjを表示させる
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-            childObj.SetActive(false);// 取得したobjを非表示にする
+        isStay = false;
+        childObj.SetActive(false);// 取得したobjを非表示にする
     }
 }
