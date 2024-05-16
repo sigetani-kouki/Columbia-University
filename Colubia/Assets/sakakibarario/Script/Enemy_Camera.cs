@@ -8,9 +8,8 @@ public class Enemy_Camera : MonoBehaviour
     Rigidbody2D rb;
 
     //敵の動き
-    private float PRota_speed = 1.0f;
-    private float MRota_speed = -1.0f;
-    private float speed_P = 50.0f;
+    private float speed = 50.0f;
+   
     //カウント用
     private float countleftTime = 3.0f;   //左向き
     private float countrightTime = 3.0f;   //右向き
@@ -23,57 +22,45 @@ public class Enemy_Camera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       rb = GetComponent<Rigidbody2D>();
-        MyEnemy = transform.localEulerAngles;
+        rb = GetComponent<Rigidbody2D>();
+        MyEnemy = transform.eulerAngles;//初期位置保存
     }
 
     private void Update()
     {
-        if (GameManager.GState == "Pose")
+        if (GameManager.GState == "Pose")//ポーズを押されたとき
             Moved_Enemy = true;
+
+        if (Move_end)//座標の更新
+        {
+            if (transform.localEulerAngles.z > 180)
+            {
+                MyEnemy = new Vector3(0, 0, 100);
+     　     }
+            else
+            {
+                MyEnemy = new Vector3(0, 0, 260);      
+            }
+            Move_end = false;
+        }
     }
 
     private void FixedUpdate()
     {
         if (GameManager.GState == "Playing")
         {
-            Debug.Log(direction);
-            Debug.Log(Move_end);
+            //Debug.Log(Move_end);
             if (Moved_Enemy)
             {
-                Move_end = false;
-
-                if (transform.localEulerAngles.z < 360 && transform.localEulerAngles.z > 270)
-                {
-                    MyEnemy = new Vector3(0,0, 280);
-                    
-                }
-                else
-                {
-                    MyEnemy = new Vector3(0, 0, 80);
-                   
-                }
-
-                transform.localEulerAngles = Vector3.MoveTowards(transform.localEulerAngles, MyEnemy, speed_P * Time.deltaTime);
-                if (transform.localEulerAngles == MyEnemy)
+                MyEnemy = new Vector3(0, 0, 260);                  
+               
+                transform.eulerAngles = Vector3.MoveTowards(transform.eulerAngles, MyEnemy, speed * Time.deltaTime);//MyEnemyまで角度を変更
+                if (transform.eulerAngles == MyEnemy)
                 {
                     countleftTime = 3.0f;
                     countrightTime = 3.0f;
-                    Moved_Enemy = false;
-                   
-                    if (MyEnemy.z == 280)
-                    {
-                        
-                        direction = true;
-                        
-                    }
-                    else
-                    {
-                        direction = false;
-                       
-                    }
-  
-                   
+                    
+                    Moved_Enemy = false;//ポーズ後の移動完了
                 }
             }
             if (!Moved_Enemy)
@@ -84,7 +71,15 @@ public class Enemy_Camera : MonoBehaviour
 
                     if (countrightTime < 0)
                     {
-                        StartCoroutine(Moveleft());
+                        transform.eulerAngles = Vector3.MoveTowards(transform.eulerAngles, MyEnemy, speed * Time.deltaTime);//MyEnemyまで角度を変更
+
+                        if (transform.localEulerAngles == MyEnemy)//移動完了
+                        {
+                            countrightTime = 3.0f;//タイムのリセット
+                            Move_end = true;//座標の更新
+                            direction = false;//向きの変更
+                        }
+
                     }
                 }
                 else
@@ -93,44 +88,19 @@ public class Enemy_Camera : MonoBehaviour
 
                     if (countleftTime < 0)
                     {
-                        StartCoroutine(Moveright());
+                        transform.eulerAngles = Vector3.MoveTowards(transform.eulerAngles, MyEnemy, speed * Time.deltaTime);//MyEnemyまで角度を変更
+
+                        if (transform.localEulerAngles == MyEnemy) // 移動完了
+                        {
+                            countleftTime = 3.0f;//タイムのリセット
+                            Move_end = true;//座標の更新
+                            direction = true;//向きの変更
+                        }
                     }
                 }
             }
         }
 
     }
-    IEnumerator Moveleft()
-    {
-        if (Moved_Enemy)
-            yield break;
-        this.transform.Rotate(0, 0, this.PRota_speed);
-            
-        yield return new WaitForSeconds(3.2f);
-
-        if(Move_end)
-            direction = false;
-
-        countleftTime = 3.0f;
-        Move_end = true;
-        yield break;
-    }
-    IEnumerator Moveright()
-    {
-        
-        this.transform.Rotate(0, 0, this.MRota_speed);
-       
-        yield return new WaitForSeconds(3.2f);
-
-
-        if (Move_end)
-        {
-            direction = true;
-            Debug.Log("cccc");
-        }
-           
-        countrightTime = 3.0f;
-        Move_end = true;
-        yield break;
-    }
+  
 }
