@@ -9,8 +9,8 @@ public class Enemy_Strength_Security_Guard : MonoBehaviour
     //GameObject MyEnemy;
 
     //敵の動き
-    public float speed = 2.0f;
-    float speed_P = 1.5f;
+    public float speed = 4.0f;
+    float speed_P = 2.0f;
 
     //カウント用
     private float countleftTime = 3.0f;   //左向き
@@ -23,6 +23,9 @@ public class Enemy_Strength_Security_Guard : MonoBehaviour
     private bool Moved_Enemy = false;
 
     Vector2 MyEnemy = new Vector2(0, 0);
+    Vector2 MyEnemy2 = new Vector2(0, 0);
+
+    bool move_end = false;
 
     // Start is called before the first frame update
     void Start()
@@ -30,17 +33,21 @@ public class Enemy_Strength_Security_Guard : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         //初期座標を記憶
         MyEnemy = transform.position;
+        MyEnemy2 = MyEnemy;
+        MyEnemy2.x = MyEnemy2.x - 5;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(MyEnemy2);
         //Player　のゲームオブジェクトを得る
          player = GameObject.FindGameObjectWithTag("Player");
         if(GameManager.GState == "Pose")
         {
             Moved_Enemy = true;//初期位置に戻す
         }
+
     }
     private void FixedUpdate()
     {
@@ -83,7 +90,15 @@ public class Enemy_Strength_Security_Guard : MonoBehaviour
 
                     if (countrightTime < 0)
                     {
-                        StartCoroutine(Moveright());
+                        this.transform.localScale = new Vector2(-1, 1);//右向き
+                        transform.position = Vector3.MoveTowards(transform.position, MyEnemy, speed * Time.deltaTime);
+                        //StartCoroutine(Moveright());
+                        if (transform.position.x == MyEnemy.x)
+                        {
+                            Debug.Log("aaaa");
+                            countrightTime = 3.0f;
+                            direction = false;
+                        }
                     }
                 }
                 else
@@ -92,7 +107,16 @@ public class Enemy_Strength_Security_Guard : MonoBehaviour
 
                     if (countleftTime < 0)
                     {
-                        StartCoroutine(Moveleft());
+                        this.transform.localScale = new Vector2(1, 1);//左向き
+                        //StartCoroutine(Moveleft());
+                        transform.position = Vector3.MoveTowards(transform.position, MyEnemy2, speed * Time.deltaTime);
+
+                        if (transform.position.x == MyEnemy2.x)
+                        {
+                            Debug.Log("aaaa");
+                            countleftTime = 3.0f;
+                            direction = true;
+                        }
                     }
                 }
             }
@@ -130,22 +154,22 @@ public class Enemy_Strength_Security_Guard : MonoBehaviour
         }
 
     }
-    IEnumerator Moveleft()
-    {
-        this.transform.localScale = new Vector2(1, 1);//左向き
-        rb.velocity = new Vector2(-speed, rb.velocity.y);//動きを決める
-        yield return new WaitForSeconds(2.0f);
-        direction = true;
-        countleftTime = 3.0f;
-        yield break;
-    }
-    IEnumerator Moveright()
-    {
-        this.transform.localScale = new Vector2(-1, 1);//右向き
-        rb.velocity = new Vector2(speed, rb.velocity.y);//動きを決める
-        yield return new WaitForSeconds(2.0f);
-        direction = false;
-        countrightTime = 3.0f;
-        yield break;
-    }
+    //IEnumerator Moveleft()
+    //{
+    //    this.transform.localScale = new Vector2(1, 1);//左向き
+    //    rb.velocity = new Vector2(-speed, rb.velocity.y);//動きを決める
+    //    yield return new WaitForSeconds(2.0f);
+    //    direction = true;
+    //    countleftTime = 3.0f;
+    //    yield break;
+    //}
+    //IEnumerator Moveright()
+    //{
+    //    this.transform.localScale = new Vector2(-1, 1);//右向き
+    //    rb.velocity = new Vector2(speed, rb.velocity.y);//動きを決める
+    //    yield return new WaitForSeconds(2.0f);
+    //    direction = false;
+    //    countrightTime = 3.0f;
+    //    yield break;
+    //}
 }
