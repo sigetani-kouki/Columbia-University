@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class LockerController : MonoBehaviour
 {
     //  子オブジェクト取得用
-    public GameObject childObj;
+    public GameObject LockerF;
+    public GameObject LockerVision;
     private bool isStay = false;
-
     PlayerController PlayerCTRL;
     // Start is called before the first frame update
     void Start()
@@ -22,23 +23,28 @@ public class LockerController : MonoBehaviour
     {
         if (PlayerCTRL.isInteract == true && isStay)
         {
-            childObj.SetActive(true);
+            LockerF.SetActive(true);
         }
         else
         {
-            childObj.SetActive(false);
+            LockerF.SetActive(false);
+        }
+       
+        if (transform.localEulerAngles.z == 180 ) 
+        {
+            LockerF.transform.localEulerAngles = transform.localEulerAngles;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         isStay = true;
-        childObj.SetActive(true);// 取得したobjを表示させる
+        LockerF.SetActive(true);// 取得したobjを表示させる
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         isStay = false;
-        childObj.SetActive(false);// 取得したobjを非表示にする
+        LockerF.SetActive(false);// 取得したobjを非表示にする
     }
 }

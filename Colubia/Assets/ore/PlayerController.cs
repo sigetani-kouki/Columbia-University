@@ -8,9 +8,9 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rb2D;
     Vector2 position;
-    public GameObject LockerVision;
 
     LockerController lockerController;
+
 
     SpriteRenderer sp;
     Color spriteColor;
@@ -74,14 +74,14 @@ public class PlayerController : MonoBehaviour
 
 
         //　Spaceを押したら重力を反転させ、グラフィックの向きを整える
-        if (SwitchGravity)
+        if (SwitchGravity && inLocker == false) 
         {
             if (Input.GetKey(KeyCode.Space))
                 GravityChange();
         }
 
         //  ロッカーのボタンガイドがアクティブなら
-        if (lockerController.childObj.activeSelf) 
+        if (lockerController.LockerF.activeSelf) 
         {
             if (Input.GetKey(KeyCode.F) && isInteract == true) 
             {
@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
                     inLocker = true;
                     Onmove = false;      //　主人公を止める
                     StartCoroutine(hideCTRL(0));    //　主人公を非表示にする
-                    StartCoroutine(LockerActivate(true));
+                    StartCoroutine(LockerActivate(true));   //　ロッカー視点を表示する
                 }
                 //　表に出る
                 else
@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
                     inLocker = false;
                     Onmove = true;      //　主人公を動けるようにする
                     StartCoroutine(hideCTRL(1));    //　主人公を表示する
-                    StartCoroutine(LockerActivate(false)); 
+                    StartCoroutine(LockerActivate(false)); //　ロッカー視点を取り除く
                 }
             }
         }
@@ -195,12 +195,12 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator LockerActivate(bool activate)
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.05f);
 
-        if (activate) 
-            LockerVision.SetActive(true);
+        if (activate)
+            lockerController.LockerVision.SetActive(true);
         else
-            LockerVision.SetActive(false);
+            lockerController.LockerVision.SetActive(false);
     }
 
 }
