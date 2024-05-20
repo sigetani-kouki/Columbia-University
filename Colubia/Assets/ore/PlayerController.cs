@@ -10,23 +10,27 @@ public class PlayerController : MonoBehaviour
     Vector2 position;
 
     LockerController lockerController;
-
+    PaperController paperController;
 
     SpriteRenderer sp;
     Color spriteColor;
 
     //　プレイヤー管理
-    public float hideduration = 0.005f;
+    public float hideduration = 0.05f;
     public float speed = 3.0f;
     private float playerX;
     private bool Onmove = true;
     private bool isMoveLeft = false;
     private bool isMoveRight = false;
 
-    //　ロッカー系
+
     public bool isInteract = true;
+
+    //　ロッカー系
     public bool inLocker = false;
 
+    //　ペーパー系
+    public bool isLookPaper = false;
 
     //  重力管理
     private bool SwitchGravity = true;
@@ -40,6 +44,7 @@ public class PlayerController : MonoBehaviour
     {
         rb2D = GetComponent<Rigidbody2D>();
         lockerController = GameObject.FindWithTag("Locker").GetComponent<LockerController>();
+        paperController =GameObject.FindWithTag("paper").GetComponent<PaperController>();
         sp = GetComponent<SpriteRenderer>();
         spriteColor = sp.color;
 
@@ -74,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
 
         //　Spaceを押したら重力を反転させ、グラフィックの向きを整える
-        if (SwitchGravity && inLocker == false) 
+        if (SwitchGravity && inLocker == false && isLookPaper == false) 
         {
             if (Input.GetKey(KeyCode.Space))
                 GravityChange();
@@ -87,28 +92,43 @@ public class PlayerController : MonoBehaviour
             {
                 isInteract = false;
                 StartCoroutine(Interactive("Locker"));
-
-                //  隠れる
-                if(inLocker == false)
-                {
-                    inLocker = true;
-                    Onmove = false;      //　主人公を止める
-                    StartCoroutine(hideCTRL(0));    //　主人公を非表示にする
-                    StartCoroutine(LockerActivate(true));   //　ロッカー視点を表示する
-                }
-                //　表に出る
-                else
-                {
-                    inLocker = false;
-                    Onmove = true;      //　主人公を動けるようにする
-                    StartCoroutine(hideCTRL(1));    //　主人公を表示する
-                    StartCoroutine(LockerActivate(false)); //　ロッカー視点を取り除く
-                }
             }
         }
+
+        //　ペーパーのボタンガイドがアクティブなら
+        if (paperController.PaperF.activeSelf) 
+        {
+            if(Input.GetKey(KeyCode.F) && isInteract == true)
+            {
+                isInteract = false;
+                StartCoroutine(Interactive("Paper"));
+            }
+        }
+        //  ペーパーを見てる時　＆＆　ペーパーESCガイドが有効の時
+        if (isLookPaper == true && paperController.PaperESC.activeSelf)
+        {
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                Debug.Log("iashd");
+                isLookPaper = false;
+                Onmove = true;
+                paperController.PaperESC.SetActive(false);
+                paperController.PaperLook.SetActive(false);
+
+                StartCoroutine(waittaime(4));
+                isInteract = true;
+            }
+        }
+
+
+
         rb2D.velocity = new Vector2(playerX, rb2D.velocity.y);
     }
 
+    IEnumerator waittaime(float x)
+    {
+        yield return new WaitForSeconds(x);
+    }
     void GravityChange()
     {
         playerX = 0;//  移動中に反転できないようにできる
@@ -171,14 +191,44 @@ public class PlayerController : MonoBehaviour
 
         if (anyOBJ == "Locker")
         {
+            //  隠れる
+            if (inLocker == false)
+            {
+                inLocker = true;
+                Onmove = false;      //　主人公を止める
+                StartCoroutine(hideCTRL(0));    //　主人公を非表示にする
+                StartCoroutine(LockerActivate(true));   //　ロッカー視点を表示する
+            }
+            //　表に出る
+            else
+            {
+                inLocker = false;
+                Onmove = true;      //　主人公を動けるようにする
+                StartCoroutine(hideCTRL(1));    //　主人公を表示する
+                StartCoroutine(LockerActivate(false)); //　ロッカー視点を取り除く
+            }
+
             //　ロッカーのX座標を「主人公とは無関係」のベクター型変数に保存
-            position.x = lockerController.transform.position.x;
-            //　保存してた座標をプレイヤーに入れる
+            position = lockerController.transform.position;
+            //　保存した座標をプレイヤーに入れる
             transform.position = position;
 
             yield return new WaitForSeconds(4f);
             isInteract = true;
-        } 
+        }
+
+        if (anyOBJ == "Paper") 
+        {
+            if(isLookPaper==false)
+            {
+                isLookPaper = true;
+                Onmove = false;
+                paperController.PaperLook.SetActive(true);
+
+                yield return new WaitForSeconds(2f);
+                paperController.PaperESC.SetActive(true);
+            }
+        }
     }
 
     IEnumerator hideCTRL(float targetAlpha)
@@ -203,4 +253,22 @@ public class PlayerController : MonoBehaviour
             lockerController.LockerVision.SetActive(false);
     }
 
+
+    /*
+     スタンガン
+
+        MAX残量５
+        
+    　　現在残量が５未満の時
+            電池を拾うと現在の残量を＋１
+
+        スタンガンクールタイムが終わってる　＆＆　左クリック　＆＆　残量が１以上
+
+            範囲内の敵が数秒間停止     ＊難所
+            
+            残量が０ならスタンガンUIのアイコン変更
+
+            スタンガンクールタイム
+     
+     */
 }

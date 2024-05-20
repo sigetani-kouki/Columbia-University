@@ -16,6 +16,11 @@ public class LockerController : MonoBehaviour
     void Start()
     {
         PlayerCTRL = GameObject.Find("Player").GetComponent<PlayerController>();
+
+        if (transform.localEulerAngles.z == 180)
+        {
+            LockerF.transform.localEulerAngles = transform.localEulerAngles;
+        }
     }
 
     // Update is called once per frame
@@ -30,10 +35,6 @@ public class LockerController : MonoBehaviour
             LockerF.SetActive(false);
         }
        
-        if (transform.localEulerAngles.z == 180 ) 
-        {
-            LockerF.transform.localEulerAngles = transform.localEulerAngles;
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
