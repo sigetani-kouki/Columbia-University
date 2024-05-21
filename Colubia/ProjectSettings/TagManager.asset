@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Locker
   - paper
+  - Battery
   layers:
   - Default
   - TransparentFX

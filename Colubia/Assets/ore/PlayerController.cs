@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 
     LockerController lockerController;
     PaperController paperController;
+    BatteryController batteryController;
 
     SpriteRenderer sp;
     Color spriteColor;
@@ -39,12 +40,17 @@ public class PlayerController : MonoBehaviour
     private float PlayerAngle = 0;
     private int PlayerAngleCount = 0;
 
+    //  ƒXƒ^ƒ“ƒKƒ“Œn
+    private int Battery = 2;
+
     // Start is called before the first frame update
     void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
         lockerController = GameObject.FindWithTag("Locker").GetComponent<LockerController>();
         paperController =GameObject.FindWithTag("paper").GetComponent<PaperController>();
+        batteryController = GameObject.FindWithTag("Battery").GetComponent<BatteryController>();
+
         sp = GetComponent<SpriteRenderer>();
         spriteColor = sp.color;
 
@@ -120,7 +126,14 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-
+        if (batteryController != null && batteryController.BatteryF.activeSelf) 
+        {
+            if (Input.GetKey(KeyCode.F) && isInteract == true)
+            {
+                isInteract = false;
+                StartCoroutine(Interactive("Battery"));
+            }
+        }
 
         rb2D.velocity = new Vector2(playerX, rb2D.velocity.y);
     }
@@ -129,6 +142,7 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(x);
     }
+
     void GravityChange()
     {
         playerX = 0;//  ˆÚ“®’†‚É”½“]‚Å‚«‚È‚¢‚æ‚¤‚É‚Å‚«‚é
@@ -228,6 +242,16 @@ public class PlayerController : MonoBehaviour
                 yield return new WaitForSeconds(2f);
                 paperController.PaperESC.SetActive(true);
             }
+        }
+
+        if (anyOBJ == "Battery")
+        {
+            Battery += 1;
+
+            batteryController.objDestroy();
+
+            yield return new WaitForSeconds(2f);
+            isInteract = true;
         }
     }
 
