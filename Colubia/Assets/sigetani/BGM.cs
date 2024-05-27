@@ -17,11 +17,11 @@ public class BGM : MonoBehaviour
     {
         if (Input.GetKeyDown("s"))
         {
-            SceneManager.LoadScene("home", LoadSceneMode.Single);
+            SceneManager.LoadScene("home.bgm", LoadSceneMode.Single);
         }
        else if(Input.GetKeyDown("w"))
         {
-            SceneManager.LoadScene("gameover", LoadSceneMode.Single);
+            SceneManager.LoadScene("gameover.bgm", LoadSceneMode.Single);
         }
     }
 }

@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 1150702135}
   - component: {fileID: 1150702134}
   m_Layer: 0
-  m_Name: gameover
+  m_Name: gameover.bgm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
