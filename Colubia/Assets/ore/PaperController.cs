@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
-public class LockerController : MonoBehaviour
+public class PaperController : MonoBehaviour
 {
     //  子オブジェクト取得用
-    public GameObject LockerF;
-    public GameObject LockerVision;
-    private bool isStay = false;
+    public GameObject PaperF;
+    public GameObject PaperLook;
+    public GameObject PaperBackGround;
+    public GameObject PaperESC;
+
     PlayerController PlayerCTRL;
+
+    private bool isLook = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,33 +20,32 @@ public class LockerController : MonoBehaviour
 
         if (transform.localEulerAngles.z == 180)
         {
-            LockerF.transform.localEulerAngles = transform.localEulerAngles;
+            PaperF.transform.localEulerAngles = transform.localEulerAngles;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (PlayerCTRL.isInteract == true && isStay)
+        if (PlayerCTRL.isInteract == true && isLook)
         {
-            LockerF.SetActive(true);
+            PaperF.SetActive(true);
         }
         else
         {
-            LockerF.SetActive(false);
+            PaperF.SetActive(false);
         }
-       
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        isStay = true;
-        LockerF.SetActive(true);// 取得したobjを表示させる
+        isLook = true;
+        PaperF.SetActive(true);// 取得したobjを表示させる
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        isStay = false;
-        LockerF.SetActive(false);// 取得したobjを非表示にする
+        isLook = false;
+        PaperF.SetActive(false);// 取得したobjを非表示にする
     }
 }

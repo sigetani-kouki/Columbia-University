@@ -4,11 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-
-
-  - Enemy
-  - Warning_area
-
+  - Locker
+  - paper
+  - Battery
   layers:
   - Default
   - TransparentFX
@@ -18,7 +16,7 @@ TagManager:
   - UI
   - 
   - 
-  - Ground
+  - 
   - 
   - 
   - 
