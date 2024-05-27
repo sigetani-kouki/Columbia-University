@@ -20,6 +20,7 @@ public class playermove : MonoBehaviour
             Vector2 pos = transform.position;
             pos.x -= speed;
             transform.position = pos;
+            this.GetComponent<SpriteRenderer>().flipX = true;
         }
 
         if(Input.GetKey(KeyCode.D))
@@ -27,6 +28,7 @@ public class playermove : MonoBehaviour
             Vector2 pos = transform.position;
             pos.x += speed;
             transform.position = pos;
+            this.GetComponent<SpriteRenderer>().flipX = false;
         }
         
     }
