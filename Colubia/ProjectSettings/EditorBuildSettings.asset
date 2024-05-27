@@ -18,12 +18,12 @@ EditorBuildSettings:
     path: Assets/sakakibarario/GaOv.unity
     guid: 841bb017b97da4442911e148caaff2e9
   - enabled: 1
-    path: Assets/sigetani/home.unity
-    guid: d1da5f927bcfec54396febf25addcaa5
-  - enabled: 1
     path: Assets/sigetani/sigetani.unity
     guid: 011720de459b59b479d930de43fa819c
   - enabled: 1
-    path: Assets/sigetani/gameover.unity
+    path: Assets/sigetani/gameover.bgm.unity
     guid: fd0406c849faf5548bbb7e99b27d9282
+  - enabled: 1
+    path: Assets/sigetani/home.bgm.unity
+    guid: d1da5f927bcfec54396febf25addcaa5
   m_configObjects: {}
