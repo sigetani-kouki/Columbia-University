@@ -19,5 +19,9 @@ public class BGM : MonoBehaviour
         {
             SceneManager.LoadScene("home", LoadSceneMode.Single);
         }
+       else if(Input.GetKeyDown("w"))
+        {
+            SceneManager.LoadScene("gameover", LoadSceneMode.Single);
+        }
     }
 }

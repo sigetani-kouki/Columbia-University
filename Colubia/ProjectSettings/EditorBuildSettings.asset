@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/sigetani/sigetani.unity
     guid: 011720de459b59b479d930de43fa819c
+  - enabled: 1
+    path: Assets/sigetani/gameover.unity
+    guid: fd0406c849faf5548bbb7e99b27d9282
   m_configObjects: {}
